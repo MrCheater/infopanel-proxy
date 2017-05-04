@@ -1,9 +1,7 @@
-var express = require('express');
+var http = require('http');
 var httpProxy = require('http-proxy');
 
-var app = express()
-
-app.use(function (req, res) {
+var server = http.createServer(function(req, res) {
   if(req.path.indexOf('/dxapps') === 0) {
     httpProxy.createProxyServer().web(req, res, {target: 'http://localhost', ws: true}, function () {
       try {
@@ -23,6 +21,6 @@ app.use(function (req, res) {
       }
     });
   }
-});
+})
 
-app.listen(8080, "0.0.0.0")
+server.listen(8080, "0.0.0.0")
